@@ -3,6 +3,7 @@ import { Color } from 'three';
 import { extend, useFrame } from '@react-three/fiber';
 import { shaderMaterial } from '@react-three/drei';
 
+import PlaneMesh from '../PlaneMesh';
 import vertexShader from './vertexShader.glsl';
 import fragmentShader from './fragmentShader.glsl';
 
@@ -17,5 +18,9 @@ export default function PortalMaterial() {
     portalMaterialRef.current.uTime += delta;
   });
 
-  return <portalMaterial ref={portalMaterialRef} />;
+  return (
+    <PlaneMesh>
+      <portalMaterial ref={portalMaterialRef} />
+    </PlaneMesh>
+  );
 }

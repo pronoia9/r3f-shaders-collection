@@ -1,15 +1,10 @@
-import { Canvas, useThree } from '@react-three/fiber';
+import { Canvas } from '@react-three/fiber';
 import styled from 'styled-components';
-import PortalMaterial from './components/Portal/PortalMaterial';
 
 export default function App() {
   return (
     <Container>
-      <Canvas>
-        <PlaneMesh>
-          <PortalMaterial />
-        </PlaneMesh>
-      </Canvas>
+      <Canvas></Canvas>
     </Container>
   );
 }
@@ -25,13 +20,3 @@ const Container = styled.div`
     height: 100%;
   }
 `;
-
-function PlaneMesh({ children }) {
-  const { viewport, size } = useThree();
-  return (
-    <mesh scale={[viewport.width, viewport.height, 1]}>
-      <planeGeometry />
-      {children}
-    </mesh>
-  );
-}
