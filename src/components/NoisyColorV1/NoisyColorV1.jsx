@@ -28,7 +28,7 @@ extend({
 export function NoisyColorV1Material() {
   const ref = useRef();
   useFrame((state, delta) => {
-    ref.current.uTime += delta;
+    ref.current.uTime += delta; // 0.05
   });
   return <noisyColorV1ShaderMaterial ref={ref} />;
 }
