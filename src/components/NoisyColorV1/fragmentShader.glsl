@@ -1,5 +1,6 @@
 uniform float uTime;
 uniform vec2 uResolution;
+
 uniform vec3 uColor1;
 uniform vec3 uColor2;
 uniform vec3 uColor3;
@@ -11,7 +12,7 @@ const float scale = 2.0;
 float rand(vec2 co) { return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453); }
 float createLen() {
   float time = 10.0 + uTime / 1.0;
-  vec2 coord = scale * (gl_FragCoord.xy - uResolution.xy) / min(uResolution.y, uResolution.x);
+  vec2 coord = scale * (gl_FragCoord.xy - vec2(0.0, uResolution.y)) / min(uResolution.y, uResolution.x);
   float len;
   for(int i = 0; i < AMOUNT; i++) {
     len = length(vec2(coord.x, coord.y));
@@ -22,17 +23,19 @@ float createLen() {
 }
 float createLen4(float x, float y, float speed, float offset) {
   float time = offset + uTime / speed;
-  vec2 coord = scale * (gl_FragCoord.xy - uResolution.xy) / min(uResolution.y, uResolution.x);
+  // vec2 coord = scale * (gl_FragCoord.xy - uResolution.xy) / min(uResolution.y, uResolution.x);
+  vec2 coord = scale * (gl_FragCoord.xy - vec2(0.0, uResolution.y)) / min(uResolution.y, uResolution.x);
   float len;
   for(int i = 0; i < AMOUNT; i++) {
     len = length(vec2(coord.x, coord.y));
     coord.x = coord.x - cos(coord.y + sin(len)) + cos(time / x);
-    //coord.y = coord.y + sin(coord.y + cos(len)) + sin(time / y);
+    // coord.y = coord.y + sin(coord.y + cos(len)) + sin(time / y);
   }
   return len;
 }
 vec3 createCircle(vec2 position, vec3 color, float size, float blur) {
-  vec2 pos = (gl_FragCoord.xy - uResolution.xy) / min(uResolution.y, uResolution.x) - position;
+  // vec2 pos = (gl_FragCoord.xy - uResolution.xy) / min(uResolution.y, uResolution.x) - position;
+  vec2 pos = (gl_FragCoord.xy - vec2(0.0, uResolution.y)) / min(uResolution.y, uResolution.x) - position;
   float circle = sqrt(pow(pos.x, 3.0) + pow(pos.y, 2.0));
   circle = smoothstep(size, size + blur, 1.0 - circle);
   return color * circle;
@@ -69,7 +72,8 @@ void main() {
 
   vec3 blend = c3;
 
-  vec3 circle = createCircle(vec2(sin(uTime / 10.0) * 0.2, 0.0), uColor3, 0.5, 0.2);
+  // vec3 circle = createCircle(vec2(sin(uTime / 10.0) * 0.2, 0.0), uColor3, 0.5, 0.2);
+  vec3 circle = createCircle(vec2(sin(uTime / 10.0) * -0.2, 0.0), uColor3, 0.5, 0.2);
   blend = sourceOver(circle, blend, circle.r);
 
   vec3 circle2 = createCircle(vec2(0.0, sin(1.0 + uTime / 20.0) * 0.5), uColor1, 0.7, 0.2);
