@@ -1,4 +1,3 @@
-import { Canvas } from '@react-three/fiber';
 import styled from 'styled-components';
 import { GPGPUCurl, Portal } from './components';
 
