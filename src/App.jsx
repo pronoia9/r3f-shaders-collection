@@ -1,11 +1,12 @@
 import { Canvas } from '@react-three/fiber';
 import styled from 'styled-components';
-import GPGPUCurl from './components/GPGPUCurl/GPGPUCurl';
+import { GPGPUCurl, Portal } from './components';
 
 export default function App() {
   return (
     <Container>
-      <GPGPUCurl />
+      <Portal />
+      {/* <GPGPUCurl /> */}
     </Container>
   );
 }
