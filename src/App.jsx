@@ -1,10 +1,13 @@
 import { Canvas } from '@react-three/fiber';
 import styled from 'styled-components';
+import GPGPUCurl from './components/GPGPUCurl/GPGPUCurl';
 
 export default function App() {
   return (
     <Container>
-      <Canvas></Canvas>
+      <Canvas>
+        <GPGPUCurl />
+      </Canvas>
     </Container>
   );
 }
