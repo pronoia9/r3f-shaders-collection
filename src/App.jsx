@@ -1,12 +1,13 @@
 import styled from 'styled-components';
-import { GPGPUCurl, Portal, PortalV2 } from './components';
+import { GPGPUCurl, NeonShapes, Portal, PortalV2 } from './components';
 
 export default function App() {
   return (
     <Container>
       {/* <Portal /> */}
-      <GPGPUCurl />
+      {/* <GPGPUCurl /> */}
       {/* <PortalV2 /> */}
+      <NeonShapes />
     </Container>
   );
 }
