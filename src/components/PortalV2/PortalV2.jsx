@@ -1,24 +1,32 @@
 import { useRef } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Color } from 'three';
+import { Canvas, extend, useFrame } from '@react-three/fiber';
+import { shaderMaterial } from '@react-three/drei';
 
 import PlaneMesh from '../PlaneMesh';
-import { WaveMaterial } from './WaveMaterial';
+import vertexShader from './vertexShader.glsl';
+import fragmentShader from './fragmentShader.glsl';
+
+extend({
+  PortalV2ShaderMaterial: shaderMaterial(
+    { time: 0, colorStart: new Color('hotpink'), colorEnd: new Color('white') },
+    vertexShader,
+    fragmentShader
+  ),
+});
+
+export function PortalV2Material() {
+  const ref = useRef();
+  useFrame((state, delta) => { ref.current.time += delta; });
+  return <portalV2ShaderMaterial ref={ref} />;
+}
 
 export default function PortalV2() {
   return (
-    <Canvas dpr={[1, 2]}>
-      <PortalV2Shader />
+    <Canvas>
+      <PlaneMesh>
+        <PortalV2Material />
+      </PlaneMesh>
     </Canvas>
-  );
-}
-
-function PortalV2Shader() {
-  const ref = useRef();
-  useFrame((state, delta) => (ref.current.time += delta));
-
-  return (
-    <PlaneMesh>
-      <waveMaterial ref={ref} key={WaveMaterial.key} colorStart='pink' colorEnd='white' />
-    </PlaneMesh>
   );
 }
