@@ -8,13 +8,13 @@ import vertexShader from './vertexShader.glsl';
 import fragmentShader from './fragmentShader.glsl';
 
 extend({
-  PortalMaterial: shaderMaterial({ uTime: 0, uColorStart: new Color('#ffffff'), uColorEnd: new Color('#000000') }, vertexShader, fragmentShader),
+  PortalShaderMaterial: shaderMaterial({ uTime: 0, uColorStart: new Color('#ffffff'), uColorEnd: new Color('#000000') }, vertexShader, fragmentShader),
 });
 
 export function PortalMaterial() {
   const portalMaterialRef = useRef();
   useFrame((state, delta) => { portalMaterialRef.current.uTime += delta; });
-  return <portalMaterial ref={portalMaterialRef} />;
+  return <portalShaderMaterial ref={portalMaterialRef} />;
 }
 
 export default function Portal() {
