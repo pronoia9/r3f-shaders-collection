@@ -5,9 +5,7 @@ import GPGPUCurl from './components/GPGPUCurl/GPGPUCurl';
 export default function App() {
   return (
     <Container>
-      <Canvas>
-        <GPGPUCurl />
-      </Canvas>
+      <GPGPUCurl />
     </Container>
   );
 }
