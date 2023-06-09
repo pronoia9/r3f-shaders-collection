@@ -7,22 +7,20 @@ import PlaneMesh from '../PlaneMesh';
 import vertexShader from './vertexShader.glsl';
 import fragmentShader from './fragmentShader.glsl';
 
-// const colors = ['', '#225ee1', '#28d7bf', '#ac53cf', '#e7a39c'];
-// const colors = ['', '#4d8be9', '#6ce4d6', '#d485e4', '#f2c5ba'];
-const colors = ['', '#78a4f5', '#8df2e6', '#eaa0f0', '#f9d8ca'];
+// const colors = ['', '#225ee1', '#28d7bf', '#ac53cf', '#e7a39c']; // OG
+// const colors = ['', '#4d8be9', '#6ce4d6', '#d485e4', '#f2c5ba']; // OG Lighter
+// const colors = ['', '#78a4f5', '#8df2e6', '#eaa0f0', '#f9d8ca']; // OG Even Lights
+const colors = ['', '#225ee1', '#28d7bf', '#dd3333', '#e7a39c']; // V1
 
 extend({
   NoisyColorV2ShaderMaterial: shaderMaterial(
     {
       uResolution: [window.innerWidth, window.innerHeight],
       uTime: 0,
-      uLowGpu: false,
-      uVeryLowGpu: false,
-      uSpeedColor: 20.0,
-      uColor1: new Color(colors[1]),
-      uColor2: new Color(colors[2]),
-      uColor3: new Color(colors[3]),
-      uColor4: new Color(colors[4]),
+      uColor1: new Color(colors[2]),
+      uColor2: new Color(colors[4]),
+      uColor3: new Color(colors[1]),
+      uColor4: new Color(colors[3]),
     },
     vertexShader,
     fragmentShader
@@ -31,9 +29,7 @@ extend({
 
 export function NoisyColorV2Material() {
   const ref = useRef();
-  useFrame((state, delta) => {
-    ref.current.uTime += delta * 5;
-  });
+  useFrame((state, delta) => { ref.current.uTime += delta * 5; });
   return <noisyColorV2ShaderMaterial ref={ref} />;
 }
 
