@@ -1,7 +1,7 @@
 import { useMemo, useState, useRef } from 'react';
 import * as THREE from 'three';
 import { Canvas, createPortal, useFrame } from '@react-three/fiber';
-import { CameraShake, useFBO } from '@react-three/drei';
+import { CameraShake, OrbitControls, useFBO } from '@react-three/drei';
 import { useControls } from 'leva';
 
 // SHADERS/MATERIALS
@@ -19,6 +19,7 @@ export default function GPGPUCurl() {
 
   return (
     <Canvas linear={true} camera={{ fov: 25 }} position={[0, 0, 6]} gl={{ antialias: true, alpha: true }}>
+      <OrbitControls makeDefault autoRotate autoRotateSpeed={0.5} zoomSpeed={0.1} />
       <CameraShake yawFrequency={1} maxYaw={0.05} pitchFrequency={1} maxPitch={0.05} rollFrequency={0.5} maxRoll={0.5} intensity={0.2} />
       <Particles {...options} />
     </Canvas>
