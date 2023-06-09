@@ -1,29 +1,12 @@
 import { useMemo, useState, useRef } from 'react';
 import * as THREE from 'three';
-import { Canvas, extend, createPortal, useFrame } from '@react-three/fiber';
-import { CameraShake, OrbitControls, shaderMaterial, useFBO } from '@react-three/drei';
+import { Canvas, createPortal, useFrame } from '@react-three/fiber';
+import { CameraShake, OrbitControls, useFBO } from '@react-three/drei';
 import { useControls } from 'leva';
 
-import simulationMaterialVertexShader from './simulationMaterialVertex.glsl';
-import simulationMaterialFragmentShader from './simulationMaterialFragment.glsl';
-import dofPointsMaterialVertexShader from './dofPointsMaterialVertexShader.glsl';
-import dofPointsMaterialFragmentShader from './dofPointsMaterialFragmentShader.glsl';
-
-extend({
-  SimulationShaderMaterial: shaderMaterial(
-    { positions: new THREE.DataTexture(getSphere(512 * 512, 128), 512, 512, THREE.RGBAFormat, THREE.FloatType), uTime: 0, uCurlFreq: 0.25 },
-    simulationMaterialVertexShader,
-    simulationMaterialFragmentShader
-  ),
-});
-
-extend({
-  DofPointsShaderMaterial: shaderMaterial(
-    { positions: null, uTime: 0, uFocus: 5.1, uFov: 50, uBlur: 30, transparent: true, blending: THREE.NormalBlending, depthWrite: false },
-    dofPointsMaterialVertexShader,
-    dofPointsMaterialFragmentShader
-  ),
-});
+// SHADERS/MATERIALS
+import './dofPointsMaterial';
+import './simulationMaterial';
 
 export default function GPGPUCurl() {
   const options = useControls({
@@ -43,8 +26,9 @@ export default function GPGPUCurl() {
   );
 }
 
-function Particles({ speed, fov, aperture, focus, curl, size = 512, ...props }) {
-  const simRef = useRef(), renderRef = useRef();
+export function Particles({ speed, fov, aperture, focus, curl, size = 512, ...props }) {
+  const simRef = useRef();
+  const renderRef = useRef();
   // Set up FBO
   const [scene] = useState(() => new THREE.Scene());
   const [camera] = useState(() => new THREE.OrthographicCamera(-1, 1, 1, -1, 1 / Math.pow(2, 53), 1));
@@ -86,7 +70,7 @@ function Particles({ speed, fov, aperture, focus, curl, size = 512, ...props }) 
       {/* Simulation goes into a FBO/Off-buffer */}
       {createPortal(
         <mesh>
-          <simulationShaderMaterial ref={simRef} />
+          <simulationMaterial ref={simRef} />
           <bufferGeometry>
             <bufferAttribute attach='attributes-position' count={positions.length / 3} array={positions} itemSize={3} />
             <bufferAttribute attach='attributes-uv' count={uvs.length / 2} array={uvs} itemSize={2} />
@@ -96,24 +80,11 @@ function Particles({ speed, fov, aperture, focus, curl, size = 512, ...props }) 
       )}
       {/* The result of which is forwarded into a pointcloud via data-texture */}
       <points {...props}>
-        <dofPointsShaderMaterial ref={renderRef} />
+        <dofPointsMaterial ref={renderRef} />
         <bufferGeometry>
           <bufferAttribute attach='attributes-position' count={particles.length / 3} array={particles} itemSize={3} />
         </bufferGeometry>
       </points>
     </>
   );
-}
-
-// UTILS
-function getPoint(v, size, data, offset) {
-  v.set(Math.random() * 2 - 1, Math.random() * 2 - 1, Math.random() * 2 - 1);
-  if (v.length() > 1) return getPoint(v, size, data, offset);
-  return v.normalize().multiplyScalar(size).toArray(data, offset);
-}
-
-function getSphere(count, size, p = new THREE.Vector4()) {
-  const data = new Float32Array(count * 4);
-  for (let i = 0; i < count * 4; i += 4) getPoint(p, size, data, i);
-  return data;
 }

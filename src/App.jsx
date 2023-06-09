@@ -5,8 +5,8 @@ export default function App() {
   return (
     <Container>
       {/* <Portal /> */}
-      {/* <GPGPUCurl /> */}
-      <PortalV2 />
+      <GPGPUCurl />
+      {/* <PortalV2 /> */}
     </Container>
   );
 }
