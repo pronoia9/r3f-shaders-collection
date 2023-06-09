@@ -3,7 +3,7 @@ import { extend } from '@react-three/fiber';
 import guid from 'short-uuid';
 
 import vertexShader from './vertexShader.glsl';
-import fragmentShader from './framentShader.glsl';
+import fragmentShader from './fragmentShader.glsl';
 
 // This shader is from Bruno Simons Threejs-Journey: https://threejs-journey.xyz
 class WaveMaterial extends THREE.ShaderMaterial {
