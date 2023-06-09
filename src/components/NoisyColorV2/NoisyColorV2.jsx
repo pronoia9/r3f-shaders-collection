@@ -7,6 +7,10 @@ import PlaneMesh from '../PlaneMesh';
 import vertexShader from './vertexShader.glsl';
 import fragmentShader from './fragmentShader.glsl';
 
+// const colors = ['', '#225ee1', '#28d7bf', '#ac53cf', '#e7a39c'];
+// const colors = ['', '#4d8be9', '#6ce4d6', '#d485e4', '#f2c5ba'];
+const colors = ['', '#78a4f5', '#8df2e6', '#eaa0f0', '#f9d8ca'];
+
 extend({
   NoisyColorV2ShaderMaterial: shaderMaterial(
     {
@@ -15,10 +19,10 @@ extend({
       uLowGpu: false,
       uVeryLowGpu: false,
       uSpeedColor: 20.0,
-      uColor1: new Color('#225ee1'),
-      uColor2: new Color('#28d7bf'),
-      uColor3: new Color('#ac53cf'),
-      uColor4: new Color('#e7a39c'),
+      uColor1: new Color(colors[1]),
+      uColor2: new Color(colors[2]),
+      uColor3: new Color(colors[3]),
+      uColor4: new Color(colors[4]),
     },
     vertexShader,
     fragmentShader
