@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { GPGPUCurl, NeonShapes, Portal, PortalV2 } from './components';
+import { GPGPUCurl, NeonShapes, NoisyColorV1, Portal, PortalV2 } from './components';
 
 export default function App() {
   return (
@@ -7,7 +7,8 @@ export default function App() {
       {/* <Portal /> */}
       {/* <GPGPUCurl /> */}
       {/* <PortalV2 /> */}
-      <NeonShapes />
+      {/* <NeonShapes /> */}
+      <NoisyColorV1 />
     </Container>
   );
 }
